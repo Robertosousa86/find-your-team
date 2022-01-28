@@ -4,6 +4,7 @@
   "description": "Uma API para gerenciamento de usuários gerando token como verificador de segurança.",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
