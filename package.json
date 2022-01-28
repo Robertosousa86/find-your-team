@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/Robertosousa86/crud-token/issues"
   },
-  "homepage": "https://github.com/Robertosousa86/crud-token#readme"
+  "homepage": "https://github.com/Robertosousa86/crud-token#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
