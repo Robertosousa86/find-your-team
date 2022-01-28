@@ -1,0 +1,25 @@
+{
+  "name": "crud-token",
+  "version": "1.0.0",
+  "description": "Uma API para gerenciamento de usuários gerando token como verificador de segurança.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Robertosousa86/crud-token.git"
+  },
+  "keywords": [
+    "TOKEN",
+    "NODE",
+    "MONGODB",
+    "CRUD"
+  ],
+  "author": "Roberto Sousa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Robertosousa86/crud-token/issues"
+  },
+  "homepage": "https://github.com/Robertosousa86/crud-token#readme"
+}
