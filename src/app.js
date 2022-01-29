@@ -1,13 +1,7 @@
-const express = require('express');
-
-const app = express();
+const server = require('./server');
 
 const PORT = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Servidor no ar!');
-});
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Servidor rodando na porta http://localhost:${PORT}`);
 });
