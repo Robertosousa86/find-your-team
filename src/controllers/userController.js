@@ -1,6 +1,6 @@
 /*
  * O construtor irá garantir que toda a vez que alguém tentar criar uma instância do controller ele deve
- * passar o model Product por parâmetro.
+ * passar o model User por parâmetro.
  */
 class UserController {
   constructor(User) {
@@ -11,7 +11,7 @@ class UserController {
     const user = new this.User(req.body);
     try {
       await user.save();
-      res.status(201).send(user);
+      res.status(201).send({ message: 'Usuário(a) criado com sucesso!' });
     } catch (err) {
       res.status(422).send(err.message);
     }
@@ -38,6 +38,22 @@ class UserController {
       res.send(user);
     } catch (err) {
       res.status(400).send(err.message);
+    }
+  }
+
+  async update(req, res) {
+    try {
+      await this.User.updateOne(
+        {
+          _id: req.params.id,
+        },
+        req.body
+      );
+      res
+        .status(200)
+        .send({ message: 'Dados do usuário(a) atualizados com sucesso!' });
+    } catch (err) {
+      res.status(422).send(err.message);
     }
   }
 }
