@@ -2,6 +2,8 @@
  * O construtor irá garantir que toda a vez que alguém tentar criar uma instância do controller ele deve
  * passar o model User por parâmetro.
  */
+const bcrypt = require('bcrypt');
+
 class UserController {
   constructor(User) {
     this.User = User;
@@ -9,6 +11,10 @@ class UserController {
 
   async create(req, res) {
     const user = new this.User(req.body);
+    const hash = await bcrypt.hash(user.password, 10);
+    
+    user.password = hash;
+
     try {
       await user.save();
       res.status(201).send({ message: 'Usuário(a) criado(a) com sucesso!' });
