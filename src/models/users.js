@@ -16,6 +16,6 @@ const schema = new mongoose.Schema({
   },
 });
 // Definindo um model no módulo global do mongoose.
-const User = mongoose.model('User', schema);
+const User = mongoose.model('Users', schema);
 
 module.exports = User;
