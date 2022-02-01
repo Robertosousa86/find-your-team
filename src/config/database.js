@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const mongodbURL = process.env.MONGODB_URL || 'localhost/test';
+const mongodbUrl = process.env.MONGODB_URL || 'localhost/test';
 
-const connect = () => {
-  mongoose.connect(mongodbURL, {
+const connect = () =>
+  mongoose.connect(mongodbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-};
 
 module.exports = {
   connect,
