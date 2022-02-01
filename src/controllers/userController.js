@@ -11,7 +11,7 @@ class UserController {
     const user = new this.User(req.body);
     try {
       await user.save();
-      res.status(201).send({ message: 'Usuário(a) criado com sucesso!' });
+      res.status(201).send({ message: 'Usuário(a) criado(a) com sucesso!' });
     } catch (err) {
       res.status(422).send(err.message);
     }
