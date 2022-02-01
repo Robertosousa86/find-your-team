@@ -56,6 +56,17 @@ class UserController {
       res.status(422).send(err.message);
     }
   }
+
+  async remove(req, res) {
+    try {
+      await this.User.deleteOne({
+        _id: req.params.id,
+      });
+      res.status(200).send({ message: 'Usuário(a) deletado(a) com sucesso!' });
+    } catch (err) {
+      res.status(400).send(err.message);
+    }
+  }
 }
 
 module.exports = UserController;
