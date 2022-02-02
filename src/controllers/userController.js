@@ -2,7 +2,6 @@
  * O construtor irá garantir que toda a vez que alguém tentar criar uma instância do controller ele deve
  * passar o model User por parâmetro.
  */
-const bcrypt = require('bcrypt');
 
 class UserController {
   constructor(User) {
