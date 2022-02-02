@@ -10,11 +10,6 @@ class UserController {
   }
 
   async create(req, res) {
-    const user = new this.User(req.body);
-    const hash = await bcrypt.hash(user.password, 10);
-
-    user.password = hash;
-
     try {
       await user.save();
       res.status(201).send({ message: 'Usuário(a) criado(a) com sucesso!' });
@@ -48,16 +43,8 @@ class UserController {
   }
 
   async update(req, res) {
-    const user = new this.User(req.body);
-    const hash = await bcrypt.hash(user.password, 10);
-
     try {
-      await this.User.updateOne(
-        { _id: req.params.id },
-        { password: hash },
-        req.body
-      );
-
+      await this.User.updateOne({ _id: req.params.id }, req.body);
       res
         .status(200)
         .send({ message: 'Dados do usuário(a) atualizados com sucesso!' });
