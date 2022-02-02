@@ -12,7 +12,7 @@ class UserController {
   async create(req, res) {
     const user = new this.User(req.body);
     const hash = await bcrypt.hash(user.password, 10);
-    
+
     user.password = hash;
 
     try {
@@ -48,13 +48,16 @@ class UserController {
   }
 
   async update(req, res) {
+    const user = new this.User(req.body);
+    const hash = await bcrypt.hash(user.password, 10);
+
     try {
       await this.User.updateOne(
-        {
-          _id: req.params.id,
-        },
+        { _id: req.params.id },
+        { password: hash },
         req.body
       );
+
       res
         .status(200)
         .send({ message: 'Dados do usuário(a) atualizados com sucesso!' });
