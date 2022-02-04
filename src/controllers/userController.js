@@ -9,6 +9,8 @@ class UserController {
   }
 
   async create(req, res) {
+    const user = new this.User(req.body);
+
     try {
       await user.save();
       res.status(201).send({ message: 'Usuário(a) criado(a) com sucesso!' });
@@ -61,6 +63,21 @@ class UserController {
     } catch (err) {
       res.status(400).send(err.message);
     }
+  }
+
+  async login(req, res) {
+    const { email, password } = req.body;
+    const userData = await this.User.findOne({ email });
+
+    if (!userData) {
+      return res.status(400).send({ message: 'E-mail inválido.' });
+    }
+
+    if (password != userData.password) {
+      return res.status(400).send({ message: 'Ops... Senha incorreta!' });
+    }
+
+    res.status(200).send({ userData });
   }
 }
 

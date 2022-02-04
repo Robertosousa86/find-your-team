@@ -13,6 +13,7 @@ const schema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select: false,
   },
 });
 // Definindo um model no módulo global do mongoose.
