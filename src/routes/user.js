@@ -13,4 +13,6 @@ router.get('/:id', (req, res) => userController.getById(req, res));
 router.put('/:id', (req, res) => userController.update(req, res));
 router.delete('/:id', (req, res) => userController.remove(req, res));
 
+router.post('/login', (req, res) => userController.login(req, res));
+
 module.exports = router;
