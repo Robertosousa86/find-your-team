@@ -76,19 +76,18 @@ class UserController {
     try {
       const user = await this.User.find({ _id: req.params.id });
 
-      if (user.length) {
-        await this.User.deleteOne({
-          _id: req.params.id,
-        });
-
-        return res
-          .status(200)
-          .send({ message: 'Usuário(a) deletado(a) com sucesso!' });
-      } else {
+      if (!user.length)
         return res
           .status(400)
           .send({ message: 'Não há usuário(a) cadastrado(a) com esse id!' });
-      }
+
+      await this.User.deleteOne({
+        _id: req.params.id,
+      });
+
+      return res
+        .status(200)
+        .send({ message: 'Usuário(a) deletado(a) com sucesso!' });
     } catch (err) {
       return res.send(err.message);
     }
