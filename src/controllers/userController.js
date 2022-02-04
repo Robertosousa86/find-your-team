@@ -18,7 +18,9 @@ class UserController {
 
       await user.save();
 
-      res.status(201).send({ message: 'Usuário(a) criado(a) com sucesso!' });
+      return res
+        .status(201)
+        .send({ message: 'Usuário(a) criado(a) com sucesso!' });
     } catch (err) {
       return res.send(err.message);
     }
@@ -48,7 +50,7 @@ class UserController {
           .status(400)
           .send({ message: 'Não há usuário(a) cadastrado(a) com esse id!' });
 
-      res.send(user);
+      return res.send(user);
     } catch (err) {
       return res.send(err.message);
     }
@@ -56,24 +58,13 @@ class UserController {
 
   async update(req, res) {
     try {
-      const user = await this.User.findOne({ _id: req.params.id }).select(
-        '+password'
-      );
+      const user = await this.User.updateOne({ _id: req.params.id }, req.body);
 
-      if (!user)
+      if (!user.matchedCount)
         return res
           .status(400)
           .send({ message: 'Não há usuário(a) cadastrado(a) com esse id!' });
-
-      const hash = await bcrypt.hash(user.password, 10);
-
-      await this.User.updateOne(
-        { _id: req.params.id },
-        { password: hash },
-        req.body
-      );
-
-      return res
+      res
         .status(200)
         .send({ message: 'Dados do usuário(a) atualizados com sucesso!' });
     } catch (err) {
@@ -83,16 +74,21 @@ class UserController {
 
   async remove(req, res) {
     try {
-      const user = await this.User.deleteOne({ _id: req.params.id });
+      const user = await this.User.find({ _id: req.params.id });
 
-      if (!user.length)
+      if (user.length) {
+        await this.User.deleteOne({
+          _id: req.params.id,
+        });
+
+        return res
+          .status(200)
+          .send({ message: 'Usuário(a) deletado(a) com sucesso!' });
+      } else {
         return res
           .status(400)
           .send({ message: 'Não há usuário(a) cadastrado(a) com esse id!' });
-
-      return res
-        .status(200)
-        .send({ message: 'Usuário(a) deletado(a) com sucesso!' });
+      }
     } catch (err) {
       return res.send(err.message);
     }
