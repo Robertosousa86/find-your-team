@@ -93,6 +93,21 @@ class UserController {
       return res.send(err.message);
     }
   }
+
+  async login(req, res) {
+    const { email, password } = req.body;
+
+    const userData = await this.User.findOne({ email }).select('+password');
+
+    if (!userData) return res.status(400).send({ message: 'E-mail inválido.' });
+
+    if (!(await bcrypt.compare(password, userData.password)))
+      return res.status(400).send({ message: 'Ops... Senha incorreta!' });
+
+    userData.password = undefined;
+
+    return res.status(200).send({ userData });
+  }
 }
 
 module.exports = UserController;
