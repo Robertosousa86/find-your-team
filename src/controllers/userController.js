@@ -3,6 +3,8 @@
  * passar o model User por parâmetro.
  */
 const bcrypt = require('bcrypt');
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 class UserController {
   constructor(User) {
@@ -104,8 +106,12 @@ class UserController {
       return res.status(400).send({ message: 'Ops... Senha incorreta!' });
 
     userData.password = undefined;
+    // (expiresIn: 86400 => 86400 segundos = 24 horas)
+    const token = jwt.sign({ id: userData.id }, process.env.SECRET, {
+      expiresIn: 86400,
+    });
 
-    return res.status(200).send({ userData });
+    return res.send({ userData, token });
   }
 }
 
