@@ -1,12 +1,12 @@
 // Rota de recursos users
 const express = require('express');
 const User = require('../models/users');
-const UserController = require('../controllers/authUserController');
+const AuthUserController = require('../controllers/authUserController');
 
 const router = express.Router(User);
 
-const userController = new UserController(User);
+const authUserController = new AuthUserController(User);
 
-router.post('/', (req, res) => userController.create(req, res));
+router.post('/', (req, res) => authUserController.create(req, res));
 
 module.exports = router;
