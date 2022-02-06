@@ -4,7 +4,7 @@ const usersRoute = require('./user');
 
 const router = express.Router();
 
-router.use('/users', usersRoute);
+router.use('/register-users', usersRoute);
 
 router.get('/', (req, res) => {
   res.send({
