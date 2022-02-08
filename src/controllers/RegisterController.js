@@ -4,33 +4,44 @@
  */
 
 const bcrypt = require('bcrypt');
-require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
-class AuthUserController {
+class RegisterController {
   constructor(User) {
     this.User = User;
+  }
+
+  tokenGenerator(params = {}) {
+    return jwt.sign(params, process.env.SECRET, {
+      expiresIn: 86400,
+    });
   }
 
   async create(req, res) {
     try {
       const user = new this.User(req.body);
 
-      const hash = await bcrypt.hash(user.password, 10);
+      if (await this.User.findOne({ name: req.body.name }))
+        return res
+          .status(400)
+          .send({ Message: 'Nome de usuário(a) já cadastrado.' });
 
       if (await this.User.findOne({ email: req.body.email }))
         return res.status(400).send({ Message: 'E-mail já cadastrado.' });
 
-      user.password = hash;
+      user.password = await bcrypt.hash(user.password, 10);
 
       await user.save();
 
+      user.password = undefined;
+
       return res
         .status(201)
-        .send({ message: 'Usuário(a) criado(a) com sucesso!' });
+        .send({ user, token: this.tokenGenerator({ id: user.id }) });
     } catch (err) {
       return res.send(err.message);
     }
   }
 }
 
-module.exports = AuthUserController;
+module.exports = RegisterController;
