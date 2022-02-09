@@ -5,17 +5,21 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  email: {
+  lane: {
     type: String,
     required: true,
   },
-  password: {
+  class: {
     type: String,
     required: true,
-    select: false,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users',
+    require: true,
   },
 });
 // Definindo um model no módulo global do mongoose.
-const User = mongoose.model('Users', schema);
+const Champion = mongoose.model('Champions', schema);
 
-module.exports = User;
+module.exports = Champion;

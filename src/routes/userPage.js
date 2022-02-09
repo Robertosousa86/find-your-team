@@ -1,14 +1,19 @@
 const express = require('express');
 const UserPageController = require('../controllers/UserPageController');
 const User = require('../models/users');
+const Champion = require('../models/champions');
 const authorization = require('../middleware/authorization');
 
-const router = express.Router(User);
+const router = express.Router(Champion);
 
 router.use(authorization);
 
-const userPageController = new UserPageController(User);
+const userPageController = new UserPageController(Champion);
 
-router.get('/', (req, res) => userPageController.getOk(req, res));
+router.post('/', (req, res) => userPageController.create(req, res));
+router.get('/', (req, res) => userPageController.get(req, res));
+router.get('/:id', (req, res) => userPageController.getById(req, res));
+router.put('/:id', (req, res) => userPageController.update(req, res));
+router.delete('/:id', (req, res) => userPageController.remove(req, res));
 
 module.exports = router;
