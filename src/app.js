@@ -7,6 +7,7 @@ app.use(express.json());
 // Configura o express e retornar uma nova instância da aplicação configurada.
 const configureExpress = () => {
   app.use('/', routes);
+
   app.database = database;
 
   return app;
@@ -14,6 +15,7 @@ const configureExpress = () => {
 // Exporta uma função que retorna uma promise, assim que a promise for resolvida significa que o DB está disponível.
 module.exports = async () => {
   const app = configureExpress();
+
   await app.database.connect();
 
   return app;
