@@ -6,8 +6,9 @@ const PORT = process.env.HOST;
 (async () => {
   try {
     const app = await setupApp();
+
     const server = app.listen(PORT, () =>
-      console.info(`App running on port ${PORT}`)
+      console.info(`App running at http://localhost:${PORT}`)
     );
 
     const exitSignals = ['SIGINT', 'SIGTERM', 'SIGQUIT'];
